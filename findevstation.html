@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearest EV Charging Station</title>
+    <!--<link rel="stylesheet" href="style.css"> Link to your existing CSS -->
+</head>
+
+<body>
+    <header>
+        <h1>Find Nearest EV Charging Station</h1>
+        <nav>
+            <ul>
+                <li><a href="homepage1.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="findevstation.html">Find EV Station</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Enter your details to find nearby EV stations</h2>
+
+            <!-- Charging station form -->
+            <form id="charging-station-form">
+                <label for="state">Select State:</label>
+                <select id="state" required>
+                    <option value="">Select State</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <!-- More states can be added here -->
+                </select>
+
+                <label for="city">Select City:</label>
+                <select id="city" required>
+                    <option value="">Select City</option>
+                    <!-- Cities will be dynamically populated based on state -->
+                </select>
+
+                <button type="button" onclick="getUserLocation()">Find Nearest Station</button>
+            </form>
+        </div>
+
+        <!-- Google Map will be displayed here -->
+        <div id="map" >    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3878252.4588674787!2d74.51574147589665!3d18.331040084089814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1selectric%20vehicle%20charging%20station%20All%20India!5e0!3m2!1sen!2sin!4v1731381459198!5m2!1sen!2sin" width="600" height="450" style="border: 1px;;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </main>
+
+    <footer>
+        <div class="bottom-details">
+          <div class="bottom_text">
+            <span class="copyright_text">Copyright © 2024 <a href="#">SELECT-EV </a>All rights reserved</span>
+            <span class="policy_terms">
+              <a href="#">Privacy policy</a>
+              <a href="#">Terms & condition</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+    <style>
+        /* Base styles */
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  background-color: #FFFFFF;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #223243;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  color: #00dfc4;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  color: #c9b8b8;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+  color: #e67e22;
+}
+
+        /* Form container */
+        .form-container {
+            background-color: #434d58;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 40px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #00dfc4;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #c9b8b8;
+
+        }
+
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #276469;
+        }
+
+        /* Google Map */
+        #map {
+    display: flex;
+    justify-content: center; /* Horizontally center the iframe */
+    align-items: center;     /* Vertically center the iframe */
+    margin: 20px auto;
+    width: 80%;
+    max-width: 1000px;
+    height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(12, 12, 12, 0.15);
+}
+
+#map > iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px; /* Optional: Keeps iframe corners rounded */
+}
+
+        /* Footer styles */
+        footer .bottom-details {
+  width: 100%;
+  background: #2e2748;
+}
+
+footer .bottom-details .bottom_text {
+  max-width: 1250px;
+  margin: auto;
+  padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-details .bottom_text span,
+.bottom-details .bottom_text a {
+  font-size: 14px;
+  font-weight: 300;
+  color: #fff;
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.bottom-details .bottom_text a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.bottom-details .bottom_text a {
+  margin-right: 10px;
+}
+
+    </style>
+
+    <script src="fesscript.js"> </script>
+
+    <!-- Google Map Embed -->
+
+</body>
+
+</html>
