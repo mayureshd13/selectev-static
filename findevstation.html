@@ -6,130 +6,205 @@
     <title>Find Nearest EV Charging Station</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /* Base styles */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
+/* Base styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
 
-        header {
-            background-color: #223243;
-            color: #00dfc4;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-        }
+/* Slide-in animation for hero section */
+@keyframes slideIn {
+  0% { transform: translateY(-50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
 
-        main {
-            padding: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #223243;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in;
+}
 
-        #map {
-            height: 500px;
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+header h1 {
+  color: #00dfc4;
+  animation: fadeIn 2s ease-in;
+}
 
-        .form-container {
-            background-color: #434d58;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+nav ul {
+  display: flex;
+  list-style: none;
+}
 
-        .form-container h2 {
-            margin-top: 0;
-            font-size: 1.5rem;
-            color: #00dfc4;
-        }
+nav li {
+  margin-right: 20px;
+}
 
-        .form-container label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+nav a {
+  color: #c9b8b8;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: color 0.3s ease-in-out;
+}
 
-        .form-container input,
-        .form-container button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: none;
-            font-size: 1rem;
-        }
+nav a:hover {
+  color: #e67e22;
+}
 
-        .form-container button {
-            background-color: #e67e22;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
 
-        .form-container button:hover {
-            background-color: #276469;
-        }
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .list-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-height: 200px;
-            overflow-y: auto;
-        }
+.form-container {
+    background-color: #434d58;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .list-container ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+.form-container h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #00dfc4;
+}
 
-        .list-container li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
+.form-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 
-        .list-container li:hover {
-            background-color: #f4f4f9;
-        }
+.form-container input,
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
 
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #223243;
-            color: #fff;
-            font-size: 0.9rem;
-        }
+.form-container button {
+    background-color: #e67e22;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        footer a {
-            color: #00dfc4;
-            text-decoration: none;
-        }
+.form-container button:hover {
+    background-color: #276469;
+}
 
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+.list-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-container li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.list-container li:hover {
+    background-color: #f4f4f9;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #223243;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #00dfc4;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav li {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-container,
+    .list-container {
+        padding: 10px;
+    }
+
+    .form-container input,
+    .form-container button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+</style>
 </head>
 <body>
     <header>
-        <h1>Find Nearest EV Charging Station</h1>
-    </header>
+        <h1>Find Charging Station</h1>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="findevstation.html">Find Ev Station</a></li>
+    
+          </ul>
+        </nav>
+      </header>
+    
     <main>
         <div class="form-container">
             <h2>Enter Your City</h2>
