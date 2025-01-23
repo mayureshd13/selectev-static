@@ -1,220 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Nearest EV Charging Station</title>
-    <!--<link rel="stylesheet" href="style.css"> Link to your existing CSS -->
-</head>
-
-<body>
-    <header>
-        <h1>Find Nearest EV Charging Station</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="aboutus.html">About Us</a></li>
-                <li><a href="findevstation.html">Find EV Station</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <div class="form-container">
-            <h2>Enter your details to find nearby EV stations</h2>
-
-            <!-- Charging station form -->
-            <form id="charging-station-form">
-                <label for="state">Select State:</label>
-                <select id="state" required>
-                    <option value="">Select State</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <!-- More states can be added here -->
-                </select>
-
-                <label for="city">Select City:</label>
-                <select id="city" required>
-                    <option value="">Select City</option>
-                    <!-- Cities will be dynamically populated based on state -->
-                </select>
-
-                <button type="button" onclick="getUserLocation()">Find Nearest Station</button>
-            </form>
-        </div>
-
-        <!-- Google Map will be displayed here -->
-        <div id="map" >    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3878252.4588674787!2d74.51574147589665!3d18.331040084089814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1selectric%20vehicle%20charging%20station%20All%20India!5e0!3m2!1sen!2sin!4v1731381459198!5m2!1sen!2sin" width="600" height="450" style="border: 1px;;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-    </main>
-
-    <footer>
-        <div class="bottom-details">
-          <div class="bottom_text">
-            <span class="copyright_text">Copyright © 2024 <a href="#">SELECT-EV </a>All rights reserved</span>
-            <span class="policy_terms">
-              <a href="#">Privacy policy</a>
-              <a href="#">Terms & condition</a>
-            </span>
-          </div>
-        </div>
-      </footer>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         /* Base styles */
-        * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  background-color: #FFFFFF;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #223243;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-  color: #00dfc4;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-}
-
-nav li {
-  margin-right: 20px;
-}
-
-nav a {
-  color: #c9b8b8;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
-  transition: color 0.3s ease-in-out;
-}
-
-nav a:hover {
-  color: #e67e22;
-}
-
-        /* Form container */
-        .form-container {
-            background-color: #434d58;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            padding: 40px;
-            width: 80%;
-            max-width: 600px;
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
         }
 
-        h2 {
-            font-size: 24px;
+        header {
+            background-color: #223243;
+            color: #00dfc4;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            background-color: #434d58;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
             color: #00dfc4;
         }
 
-        form label {
+        .form-container label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: bold;
-            color: #c9b8b8;
-
         }
 
-        form select {
+        .form-container input,
+        .form-container button {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: none;
+            font-size: 1rem;
         }
 
-        form button {
-            width: 100%;
-            padding: 12px;
+        .form-container button {
             background-color: #e67e22;
             color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        form button:hover {
+        .form-container button:hover {
             background-color: #276469;
         }
 
-        /* Google Map */
-        #map {
-    display: flex;
-    justify-content: center; /* Horizontally center the iframe */
-    align-items: center;     /* Vertically center the iframe */
-    margin: 20px auto;
-    width: 80%;
-    max-width: 1000px;
-    height: 400px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(12, 12, 12, 0.15);
-}
+        .list-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
 
-#map > iframe {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px; /* Optional: Keeps iframe corners rounded */
-}
+        .list-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-        /* Footer styles */
-        footer .bottom-details {
-  width: 100%;
-  background: #2e2748;
-}
+        .list-container li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
 
-footer .bottom-details .bottom_text {
-  max-width: 1250px;
-  margin: auto;
-  padding: 10px 10px;
-  display: flex;
-  justify-content: space-between;
-}
+        .list-container li:hover {
+            background-color: #f4f4f9;
+        }
 
-.bottom-details .bottom_text span,
-.bottom-details .bottom_text a {
-  font-size: 14px;
-  font-weight: 300;
-  color: #fff;
-  opacity: 0.8;
-  text-decoration: none;
-}
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #223243;
+            color: #fff;
+            font-size: 0.9rem;
+        }
 
-.bottom-details .bottom_text a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
+        footer a {
+            color: #00dfc4;
+            text-decoration: none;
+        }
 
-.bottom-details .bottom_text a {
-  margin-right: 10px;
-}
-
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
+</head>
+<body>
+    <header>
+        <h1>Find Nearest EV Charging Station</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <h2>Enter Your City</h2>
+            <form id="search-form">
+                <label for="city">City:</label>
+                <input type="text" id="city" placeholder="Enter your city">
+                <button type="submit">Find Stations</button>
+            </form>
+        </div>
+        <div class="list-container">
+            <ul id="station-list"></ul>
+        </div>
+        <div id="map"></div>
+    </main>
+    <footer>
+        <p>© 2025 SELECT-EV. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([20.5937, 78.9629], 5); // Centered on India
 
-    <script src="fesscript.js"> </script>
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-    <!-- Google Map Embed -->
+        // Custom Marker Icon
+        const stationIcon = L.icon({
+            iconUrl: 'icon.png', // Replace with your custom icon URL
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
 
+        // Highlight Marker Icon
+        const highlightIcon = L.icon({
+            iconUrl: 'icon1.png', // Replace with your highlight icon URL
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        let stationsData = [];
+        let currentMarker = null;
+
+        // Fetch EV charging stations and add markers
+        async function fetchStations(city) {
+            // Replace with your actual JSON file URL
+            const jsonUrl = 'ev_stations.json';
+
+            try {
+                const response = await fetch(jsonUrl); // Fetch the local JSON file
+                const data = await response.json();
+                console.log(data);  // Debugging: log the data received from the JSON file
+                stationsData = data;
+
+                if (data && data.length > 0) {
+                    // Filter stations by city
+                    const filteredStations = data.filter(station => station.city.toLowerCase() === city.toLowerCase());
+
+                    if (filteredStations.length > 0) {
+                        // Clear any existing markers
+                        map.eachLayer((layer) => {
+                            if (layer instanceof L.Marker) {
+                                map.removeLayer(layer);
+                            }
+                        });
+
+                        // Clear the list
+                        const stationList = document.getElementById('station-list');
+                        stationList.innerHTML = '';
+
+                        // Iterate over the filtered data and add markers for each charging station
+                        filteredStations.forEach((station, index) => {
+                            const lat = station.lattitude;
+                            const lon = station.longitude;
+
+                            // Center the map on the first charging station
+                            map.setView([lat, lon], 12);
+
+                            // Add custom marker for the charging station
+                            const marker = L.marker([lat, lon], { icon: stationIcon })
+                                .addTo(map)
+                                .bindPopup(`Charging Station in ${city}`);
+
+                            // Add list item
+                            const listItem = document.createElement('li');
+                            listItem.textContent = station.address;
+                            listItem.addEventListener('click', () => {
+                                if (currentMarker) {
+                                    currentMarker.setIcon(stationIcon); // Reset previously highlighted marker
+                                }
+                                map.setView([lat, lon], 12);
+                                marker.setIcon(highlightIcon); // Highlight the selected marker
+                                currentMarker = marker; // Set the current marker
+                            });
+                            stationList.appendChild(listItem);
+                        });
+                    } else {
+                        alert('No charging stations found in the city.');
+                    }
+                } else {
+                    alert('No charging stations found in the city.');
+                }
+            } catch (error) {
+                console.error('Error fetching data from JSON file:', error);
+                alert('An error occurred while fetching data.');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('search-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const city = document.getElementById('city').value.trim();
+            if (city) {
+                fetchStations(city);
+            } else {
+                alert('Please enter a city name.');
+            }
+        });
+    </script>
 </body>
-
 </html>

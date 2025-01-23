@@ -13,6 +13,18 @@ body {
   background-color: #FFFFFF;
 }
 
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Slide-in animation for hero section */
+@keyframes slideIn {
+  0% { transform: translateY(-50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -20,10 +32,12 @@ header {
   padding: 20px;
   background-color: #223243;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in;
 }
 
 header h1 {
   color: #00dfc4;
+  animation: fadeIn 2s ease-in;
 }
 
 nav ul {
@@ -60,11 +74,13 @@ main {
   background-position: center;
   color: #00663d;
   padding: 50px 0;
+  animation: slideIn 1.5s ease-in;
 }
 
 .hero h2 {
   font-size: 2.5em;
   margin-bottom: 20px;
+  animation: fadeIn 2s ease-in;
 }
 
 .hero button {
@@ -80,10 +96,12 @@ main {
     5px 5px 15px rgba(0, 0, 0, 0.35),
     inset -5px -5px 15px rgba(255, 255, 255, 0.1),
     inset 5px 5px 15px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .hero button:hover {
   background-color: #d35400;
+  transform: scale(1.1);
 }
 
 .featured {
@@ -95,6 +113,7 @@ main {
 .featured h2 {
   font-size: 36px;
   margin-bottom: 50px;
+  animation: fadeIn 2s ease-in;
 }
 
 .product-grid {
@@ -111,6 +130,11 @@ main {
   padding: 20px;
   max-width: 300px;
   text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
 }
 
 .product-card img {
@@ -138,11 +162,12 @@ main {
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .product-card button:hover {
   background-color: #d35400;
+  transform: scale(1.1);
 }
 
 .gallery {
@@ -154,6 +179,7 @@ main {
 .gallery h2 {
   font-size: 36px;
   margin-bottom: 50px;
+  animation: fadeIn 2s ease-in;
 }
 
 .image-grid {
@@ -176,10 +202,13 @@ main {
 .image:hover {
   transform: scale(1.05);
 }
+
 footer .bottom-details {
   width: 100%;
   background: #2e2748;
+  animation: fadeIn 1s ease-in;
 }
+
 footer .bottom-details .bottom_text {
   max-width: 1250px;
   margin: auto;
@@ -187,6 +216,7 @@ footer .bottom-details .bottom_text {
   display: flex;
   justify-content: space-between;
 }
+
 .bottom-details .bottom_text span,
 .bottom-details .bottom_text a {
   font-size: 14px;
@@ -194,11 +224,14 @@ footer .bottom-details .bottom_text {
   color: #fff;
   opacity: 0.8;
   text-decoration: none;
+  transition: opacity 0.3s ease-in-out;
 }
+
 .bottom-details .bottom_text a:hover {
   opacity: 1;
   text-decoration: underline;
 }
+
 .bottom-details .bottom_text a {
   margin-right: 10px;
 }
