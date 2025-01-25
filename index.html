@@ -14,11 +14,23 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="findevstation.html">Find Ev Station</a></li>
-
+        <li><a href="findevstation.html">Find EV Station</a></li>
+      </ul>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="mobile-menu" id="mobile-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="findevstation.html">Find EV Station</a></li>
       </ul>
     </nav>
   </header>
+  <div class="backdrop" onclick="toggleMenu()"></div>
+
 
 
 
@@ -32,12 +44,14 @@
       </a>
     </section>
 
-
-    <script type="const shopNowButton = document.querySelector('button');
-shopNowButton.addEventListener('click', () => {
-  // Code to redirect the user to the products page
-  window.location.href = 'products.html';
-});"></script>
+    <script>
+      const shopNowButton = document.querySelector('button');
+      shopNowButton.addEventListener('click', () => {
+        // Code to redirect the user to the products page
+        window.location.href = 'products.html';
+      });
+    </script>
+        
 
 
     <section class="featured">
@@ -93,6 +107,18 @@ shopNowButton.addEventListener('click', () => {
       </div>
     </div>
   </footer>
+  <script>
+    // JavaScript for Hamburger Menu
+    function toggleMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const backdrop = document.querySelector('.backdrop');
+      const hamburger = document.querySelector('.hamburger');
+      
+      mobileMenu.classList.toggle('active');
+      backdrop.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+  </script>
 
 </body>
 
