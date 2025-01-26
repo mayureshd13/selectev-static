@@ -33,14 +33,18 @@ header {
   padding: 20px;
   background-color: #223243;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-in;
 }
 
 header h1 {
   color: #00dfc4;
-  animation: fadeIn 2s ease-in;
 }
 
+nav {
+  display: flex;
+  align-items: center;
+}
+
+/* Navigation Menu */
 nav ul {
   display: flex;
   list-style: none;
@@ -60,6 +64,115 @@ nav a {
 
 nav a:hover {
   color: #e67e22;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 11;
+}
+
+.hamburger span {
+  background: #fff;
+  height: 3px;
+  width: 25px;
+  margin: 4px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Navigation Menu */
+nav ul.mobile-menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background-color: #223243;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  padding: 20px 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+nav ul.mobile-menu.active {
+  display: flex;
+}
+
+nav ul.mobile-menu li {
+  margin: 15px 0;
+}
+
+nav ul.mobile-menu li a {
+  font-size: 18px;
+  color: #fff;
+  transition: color 0.3s ease-in-out;
+}
+
+nav ul.mobile-menu li a:hover {
+  color: #00dfc4;
+}
+
+/* Backdrop Effect */
+.backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.backdrop.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  nav ul.mobile-menu {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .hamburger {
+    display: none;
+  }
+
+  nav ul {
+    display: flex;
+  }
 }
 
 main {
@@ -193,18 +306,29 @@ footer a:hover {
 </head>
 <body>
     <header>
-        <h1>Find Charging Station</h1>
+        <h1>SelectEV</h1>
         <nav>
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="products.html">Products</a></li>
             <li><a href="aboutus.html">About Us</a></li>
-            <li><a href="findevstation.html">Find Ev Station</a></li>
-    
+            <li><a href="findevstation.html">Find EV Station</a></li>
+          </ul>
+          <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <ul class="mobile-menu" id="mobile-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="findevstation.html">Find EV Station</a></li>
           </ul>
         </nav>
       </header>
-    
+      <div class="backdrop" onclick="toggleMenu()"></div>
+        
     <main>
         <div class="form-container">
             <h2>Enter Your City</h2>
@@ -326,6 +450,17 @@ footer a:hover {
                 alert('Please enter a city name.');
             }
         });
+    // JavaScript for Hamburger Menu
+    function toggleMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const backdrop = document.querySelector('.backdrop');
+      const hamburger = document.querySelector('.hamburger');
+      
+      mobileMenu.classList.toggle('active');
+      backdrop.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+
     </script>
 </body>
 </html>
