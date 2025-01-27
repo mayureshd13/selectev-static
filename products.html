@@ -9,6 +9,7 @@
 </head>
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
 
 
   body {
@@ -21,17 +22,26 @@
 
   /* Header */
   header {
-    display: flex;
-    height: 2rem;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: #223243;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  position: fixed;
+  top: 0%;
+  box-sizing: border-box;
+  width: 100%;
+  z-index: 1000;
+  height: 4rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 0;
+  background-color: #223243;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   }
 
   header h1 {
     color: #00dfc4;
+    font-family: "Roboto Condensed", serif;
+    font-size: 28px;
   }
 
   nav {
@@ -179,6 +189,7 @@
   }
 
   .card-row {
+    margin-top: 60px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -199,7 +210,6 @@
     flex-direction: column;
     justify-content: space-between;
   }
-
   .card:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     background-color: #3d7668;
@@ -218,6 +228,7 @@
     font-size: 1.3rem;
     margin-bottom: 10px;
     color: #00dfc4;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
 
   .card:hover h3 {
@@ -285,8 +296,12 @@
   @media (max-width: 768px) {
     .card {
       width: calc(100% - 20px);
+      align-items: center;
     }
-
+    .card-row{
+      align-items:center;
+      justify-content: center;
+    }
     footer .bottom-details .bottom_text {
       flex-direction: column;
       text-align: center;
@@ -303,7 +318,7 @@
 
 <body>
   <header>
-    <h1>Products</h1>
+    <h1>SelectEV-Products</h1>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -330,92 +345,104 @@
   <main>
     <div class="products-tab">
       <div class="card-row">
-        <div class="card">
+        <div class="card" id="card1">
           <img src="https://okayaev.com/storage/escooterattrs/F4-Green1.png" alt="Product 1">
-          <h3>FAAST F4</h3>
-          <button class="tab-button"
-            onclick="window.open('http://okayaev.com/e-scooters/FAAST-F4', '_blank');">VIEW</button>
+          <div>
+            <h3>Faast F4</h3>
+            <button class="tab-button"
+              onclick="window.open('http://okayaev.com/e-scooters/FAAST-F4', '_blank');">VIEW</button>  
+          </div>
         </div>
         <div class="card">
           <img src="https://www.drivespark.com/bikes-photos/models/750x550/olas1air_1666949393.jpg/3/" alt="Product 2">
-          <h3>OLA S1</h3>
-          <p></p>
+          <div>
+            <h3>OLA S1</h3>
           <button class="tab-button"
             onclick="window.open('https://www.olaelectric.com/s1-pro?gad_source=1','_blank');">VIEW</button>
+          </div>
         </div>
         <div class="card">
           <img
             src="https://cdn.bajajauto.com/-/media/images/chetak/product-page-redesign/new-premium-2024/360degrees/brooklyn-black/webp/1.png"
             alt="Product 3">
-          <h3>Chetak</h3>
-          <p></p>
-          <button class="tab-button"
-            onclick="window.open('https://www.tvsmotor.com/electric-vehicle/tvs-iqube','_blank');">VIEW</button>
-        </div>
+          <div>
+            <h3>Chetak</h3>
+            <button class="tab-button"
+              onclick="window.open('https://www.tvsmotor.com/electric-vehicle/tvs-iqube','_blank');">VIEW</button>  
+          </div>
+          </div>
 
         <div class="card">
           <img src="https://assets.mspimages.in/wp-content/uploads/2022/04/TVS-iQube.jpg" alt="Product 3">
-          <h3>TVS-iQube</h3>
-          <p></p>
-          <button class="tab-button"
-            onclick="window.open('https://www.tvsmotor.com/electric-vehicle/tvs-iqube','_blank');">VIEW</button>
+          <div>
+            <h3>TVS-iQube</h3>
+            <button class="tab-button"
+              onclick="window.open('https://www.tvsmotor.com/electric-vehicle/tvs-iqube','_blank');">VIEW</button>  
+          </div>
         </div>
         <div class="card">
           <img src="https://imgd.aeplcdn.com/1280x720/bw/models/hero-electric-photon-hx20210511133422.jpg"
             alt="Product 4">
-          <h3>Photon</h3>
-
-          <button class="tab-button"
-            onclick="window.open('https://heroelectric.in/bike/photon-lp/','_blank');">VIEW</button>
-        </div>
+          <div>
+            <h3>Photon</h3>
+            <button class="tab-button"
+             onclick="window.open('https://heroelectric.in/bike/photon-lp/','_blank');">VIEW</button>
+          </div>
+          </div>
         <div class="card">
           <img
             src="https://bikeadvice.in/wp-content/uploads/2022/07/Ather-450-X-Gen-3-Electric-Scooter-White-Colour-1280x720.jpg"
             alt="Product 5">
-          <h3>Ather 450x</h3>
-
-
-          <button class="tab-button" onclick="window.open('https://www.atherenergy.com/450x','_blank');">VIEW</button>
+          <div>
+            <h3>Ather 450x</h3>
+            <button class="tab-button" onclick="window.open('https://www.atherenergy.com/450x','_blank');">VIEW</button>
+          </div>
         </div>
         <div class="card">
           <img src="https://media.zigcdn.com/media/model/2022/Oct/hero-vida-v1-right-side-view_360x240.jpg"
             alt="Product 6">
-          <h3>Vida V1</h3>
-
-          <button class="tab-button" onclick="window.open('https://www.vidaworld.com/','_blank');">VIEW</button>
-        </div>
-        <div class="card">
+            <div>
+              <h3>Vida V1</h3>
+              <button class="tab-button" onclick="window.open('https://www.vidaworld.com/','_blank');">VIEW</button>
+            </div>    
+            </div>
+            <div class="card">
           <img src="revolt.png" alt="Product 7">
-          <h3>revolt rv400</h3>
-
-          <button class="tab-button" onclick="window.open('https://www.revoltmotors.com/rv400','_blank');">VIEW</button>
+          <div>
+            <h3>Revolt rv400</h3>
+            <button class="tab-button" onclick="window.open('https://www.revoltmotors.com/rv400','_blank');">VIEW</button>  
+          </div>
         </div>
         <div class="card">
           <img src="tork.png" alt="Product 8">
-          <h3>Krotos</h3>
-
-          <button class="tab-button" onclick="window.open('https://booking.torkmotors.com/','_blank');">VIEW</button>
+          <div>
+            <h3>Krotos</h3>
+            <button class="tab-button" onclick="window.open('https://booking.torkmotors.com/','_blank');">VIEW</button>  
+          </div>
         </div>
         <div class="card">
           <img src="beast.png" alt="Product 6">
-          <h3>joy Beast</h3>
-
-          <button class="tab-button"
-            onclick="window.open('https://www.joyebike.com/product/beast/','_blank');">VIEW</button>
+          <div>
+            <h3>Joy Beast</h3>
+            <button class="tab-button"
+              onclick="window.open('https://www.joyebike.com/product/beast/','_blank');">VIEW</button>  
+          </div>
         </div>
         <div class="card">
           <img src="hero lectro c7+ .png" alt="Product 7">
-          <h3>Hero lectro c7+</h3>
-
-          <button class="tab-button"
-            onclick="window.open('https://www.herolectro.com/c7%2B-SHLE27GYGY03HM_main.html','_blank');">VIEW</button>
+          <div>
+            <h3>Hero lectro c7+</h3>
+            <button class="tab-button"
+              onclick="window.open('https://www.herolectro.com/c7%2B-SHLE27GYGY03HM_main.html','_blank');">VIEW</button>  
+          </div>
         </div>
         <div class="card">
           <img src="lectro c4+.jpeg" alt="Product 8">
-          <h3>Hero lectro c4+</h3>
-
-          <button class="tab-button"
-            onclick="window.open('https://www.herolectro.com/c4%2B-ESLC426PLPL001_main.html','_blank');">VIEW</button>
+          <div>
+            <h3>Hero lectro c4+</h3>
+            <button class="tab-button"
+              onclick="window.open('https://www.herolectro.com/c4%2B-ESLC426PLPL001_main.html','_blank');">VIEW</button>  
+          </div>
         </div>
       </div>
   </main>

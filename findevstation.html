@@ -7,6 +7,8 @@
   <title>Find Nearest EV Charging Station</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
+      @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
     /* Base styles */
     body {
       font-family: 'Poppins', sans-serif;
@@ -41,16 +43,25 @@
 
     header {
       display: flex;
-      height: 2rem;
+      position: fixed;
+      top: 0%;
+      box-sizing: border-box;
+      width: 100%;
+      z-index: 1001;
+      height: 4rem;
       justify-content: space-between;
       align-items: center;
       padding: 20px;
+      margin: 0;
       background-color: #223243;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
     }
 
     header h1 {
+      font-size:28px ;
       color: #00dfc4;
+      font-family: "Roboto Condensed", serif;
     }
 
     nav {
@@ -204,6 +215,7 @@
     }
 
     .form-container {
+      margin-top: 80px;
       background-color: #434d58;
       padding: 20px;
       border-radius: 10px;
@@ -213,9 +225,11 @@
     }
 
     .form-container h2 {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       margin-top: 0;
       font-size: 1.5rem;
-      color: #00dfc4;
+      color: #6cf1e1;
+      font-size: 20px;
     }
 
     .form-container label {
@@ -356,7 +370,7 @@
 
 <body>
   <header>
-    <h1>SelectEV</h1>
+    <h1>SelectEV-Find EV Station </h1>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>

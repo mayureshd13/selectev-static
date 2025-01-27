@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
 
 
 
@@ -39,6 +40,8 @@ header {
 
 header h1 {
   color: #00dfc4;
+  font-family: "Roboto Condensed", serif;
+  font-size: 28px;
 }
 
 nav {
@@ -262,11 +265,13 @@ main {
 .product-card h3 {
   font-size: 24px;
   margin-bottom: 10px;
+  color: #f4f4f9;
 }
 
 .product-card p {
   font-size: 16px;
   margin-bottom: 20px;
+  color: rgb(200, 233, 238);
 }
 
 .product-card button {
