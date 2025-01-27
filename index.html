@@ -555,15 +555,21 @@ footer .bottom-details .bottom_text {
     </div>
   </footer>
   <script>
-    // JavaScript for Hamburger Menu
-    function toggleMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      const backdrop = document.querySelector('.backdrop');
-      const hamburger = document.querySelector('.hamburger');
-      
-      mobileMenu.classList.toggle('active');
-      backdrop.classList.toggle('active');
-      hamburger.classList.toggle('active');
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('nav ul.mobile-menu');
+const backdrop = document.querySelector('.backdrop');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+  backdrop.classList.toggle('active');
+});
+
+backdrop.addEventListener('click', () => {
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('active');
+  backdrop.classList.remove('active');
+});
     }
   </script>
 
