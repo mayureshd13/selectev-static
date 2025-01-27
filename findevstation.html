@@ -276,21 +276,37 @@
       background-color: #f4f4f9;
     }
 
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #223243;
+    footer .bottom-details {
+      width: 100%;
+      background: #2e2748;
+      animation: fadeIn 1s ease-in;
+    }
+
+    footer .bottom-details .bottom_text {
+      max-width: 1250px;
+      margin: auto;
+      padding: 10px 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .bottom-details .bottom_text span,
+    .bottom-details .bottom_text a {
+      font-size: 14px;
+      font-weight: 300;
       color: #fff;
-      font-size: 0.9rem;
-    }
-
-    footer a {
-      color: #00dfc4;
+      opacity: 0.8;
       text-decoration: none;
+      transition: opacity 0.3s ease-in-out;
     }
 
-    footer a:hover {
+    .bottom-details .bottom_text a:hover {
+      opacity: 1;
       text-decoration: underline;
+    }
+
+    .bottom-details .bottom_text a {
+      margin-right: 10px;
     }
 
     /* Responsive styles */
@@ -308,6 +324,18 @@
         margin-bottom: 10px;
         margin-right: 0;
       }
+
+      footer .bottom-details .bottom_text {
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
+      }
+
+      .bottom-details .bottom_text span,
+      .bottom-details .bottom_text a {
+        font-size: 12px;
+      }
+
     }
 
     @media (max-width: 600px) {
@@ -366,7 +394,15 @@
     <div id="map"></div>
   </main>
   <footer>
-    <p>© 2025 SELECT-EV. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    <div class="bottom-details">
+      <div class="bottom_text">
+        <span class="copyright_text">Copyright © 2025 <a href="#">SELECT-EV </a>All rights reserved</span>
+        <span class="policy_terms">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms & condition</a>
+        </span>
+      </div>
+    </div>
   </footer>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
