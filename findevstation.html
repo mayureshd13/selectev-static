@@ -403,6 +403,44 @@
         padding: 8px;
       }
     }
+    .popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content p {
+  margin-bottom: 15px;
+}
+
+#closePopup {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#closePopup:hover {
+  background: #0056b3;
+}
+
   </style>
 </head>
 
@@ -449,6 +487,12 @@
     </div>
     <div id="map"></div>
   </main>
+  <div id="customPopup" class="popup">
+    <div class="popup-content">
+      <p id="popupMessage"></p>
+      <button id="closePopup">OK</button>
+    </div>
+  </div>  
   <footer>
     <div class="bottom-details">
       <div class="bottom_text">
@@ -513,90 +557,112 @@
     let currentMarker = null;
 
     function showLoading() {
-      const stationList = document.getElementById('station-list');
-      stationList.innerHTML = '<li>Loading stations...</li>';
+  const stationList = document.getElementById('station-list');
+  stationList.innerHTML = '<li>Loading stations...</li>';
+}
+
+function hideLoading() {
+  const stationList = document.getElementById('station-list');
+  stationList.innerHTML = '';
+}
+
+// Function to show custom pop-up
+function showPopup(message) {
+  document.getElementById('popupMessage').textContent = message;
+  document.getElementById('customPopup').style.display = 'flex';
+}
+
+// Close pop-up on button click
+document.getElementById('closePopup').addEventListener('click', function() {
+  document.getElementById('customPopup').style.display = 'none';
+});
+
+async function fetchStations(state, city) {
+  const jsonUrl = 'stationev.json'; // Path to your JSON data
+
+  showLoading();
+
+  try {
+    const response = await fetch(jsonUrl);
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
     }
+    const data = await response.json();
+    stationsData = data;
 
-    function hideLoading() {
-      const stationList = document.getElementById('station-list');
-      stationList.innerHTML = '';
-    }
+    hideLoading();
 
-    async function fetchStations(state, city) {
-      const jsonUrl = 'stationev.json'; // Replace with your actual JSON file URL
+    if (data && data.length > 0) {
+      // Log state and city for debugging
+      console.log('Searching for:', state, city);
 
-      showLoading();
+      const filteredStations = data.filter(station =>
+        station.city.toLowerCase() === city.toLowerCase() && station.state.toLowerCase() === state.toLowerCase()
+      );
 
-      try {
-        const response = await fetch(jsonUrl);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        const data = await response.json();
-        stationsData = data;
-
-        hideLoading();
-
-        if (data && data.length > 0) {
-          const filteredStations = data.filter(station =>
-            station.city.toLowerCase() === city.toLowerCase() && station.state.toLowerCase() === state.toLowerCase()
-          );
-
-          if (filteredStations.length > 0) {
-            map.eachLayer(layer => {
-              if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
-              }
-            });
-
-            const stationList = document.getElementById('station-list');
-            stationList.innerHTML = '';
-
-            filteredStations.forEach(station => {
-              const lat = station.latitude;
-              const lon = station.longitude;
-
-              map.setView([lat, lon], 12);
-
-              const marker = L.marker([lat, lon], { icon: stationIcon })
-                .addTo(map)
-                .bindPopup(`<b>${station.name}</b><br>${station.address}`);
-
-              const listItem = document.createElement('li');
-              listItem.textContent = `${station.name}: ${station.address}`;
-              listItem.addEventListener('click', () => {
-                if (currentMarker) {
-                  currentMarker.setIcon(stationIcon);
-                }
-                map.setView([lat, lon], 12);
-                marker.setIcon(highlightIcon);
-                currentMarker = marker;
-              });
-              stationList.appendChild(listItem);
-            });
-          } else {
-            alert('No charging stations found in the selected city and state.');
+      if (filteredStations.length > 0) {
+        map.eachLayer(layer => {
+          if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
           }
-        } else {
-          alert('No charging stations found.');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        hideLoading();
-        alert('An error occurred while fetching data. Please try again later.');
-      }
-    }
+        });
 
-    document.getElementById('search-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const state = document.getElementById('state').value.trim();
-      const city = document.getElementById('city').value.trim();
-      if (state && city) {
-        fetchStations(state, city);
+        const stationList = document.getElementById('station-list');
+        stationList.innerHTML = '';
+
+        filteredStations.forEach(station => {
+          const lat = station.latitude;
+          const lon = station.longitude;
+
+          // Log coordinates to ensure they're valid
+          console.log('Coordinates for station:', lat, lon);
+
+          // Check for valid coordinates before adding the marker
+          if (lat && lon && !isNaN(lat) && !isNaN(lon)) {
+            map.setView([lat, lon], 12);
+
+            const marker = L.marker([lat, lon], { icon: stationIcon })
+              .addTo(map)
+              .bindPopup(`<b>${station.name}</b><br>${station.address}`);
+
+            const listItem = document.createElement('li');
+            listItem.textContent = `${station.name}: ${station.address}`;
+            listItem.addEventListener('click', () => {
+              if (currentMarker) {
+                currentMarker.setIcon(stationIcon);
+              }
+              map.setView([lat, lon], 12);
+              marker.setIcon(highlightIcon);
+              currentMarker = marker;
+            });
+            stationList.appendChild(listItem);
+          } else {
+            console.error(`Invalid coordinates for station: ${station.name}`);
+          }
+        });
       } else {
-        alert('Please select a state and enter a city.');
+        showPopup('No charging stations found in the selected city and state.');
       }
-    });
+    } else {
+      showPopup('No charging stations found.');
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    hideLoading();
+    showPopup('An error occurred while fetching data. Please try again later.');
+  }
+}
+
+document.getElementById('search-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const state = document.getElementById('state').value.trim();
+  const city = document.getElementById('city').value.trim();
+  if (state && city) {
+    fetchStations(state, city);
+  } else {
+    showPopup('Please select a state and enter a city.');
+  }
+});
 
     function toggleMenu() {
       const mobileMenu = document.getElementById('mobile-menu');
