@@ -7,7 +7,7 @@
   <title>Find Nearest EV Charging Station</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-      @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
 
     /* Base styles */
     body {
@@ -59,7 +59,7 @@
     }
 
     header h1 {
-      font-size:28px ;
+      font-size: 28px;
       color: #00dfc4;
       font-family: "Roboto Condensed", serif;
     }
@@ -264,6 +264,44 @@
       background-color: #276469;
     }
 
+    label[for="state"] {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    #state {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      color: #333;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      margin-bottom: 1rem;
+    }
+
+    #state:hover {
+      border-color: #007bff;
+      background-color: #e9f4fe;
+    }
+
+    #state:focus {
+      outline: none;
+      border-color: #007bff;
+      background-color: #fff;
+    }
+
+    #state option {
+      padding: 10px;
+      background-color: #fff;
+      color: #333;
+    }
+
     .list-container {
       background-color: #fff;
       padding: 20px;
@@ -370,7 +408,7 @@
 
 <body>
   <header>
-    <h1>SelectEV-Find EV Station </h1>
+    <h1>SelectEV - Find EV Station</h1>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -395,8 +433,12 @@
 
   <main>
     <div class="form-container">
-      <h2>Enter Your City</h2>
+      <h2>Enter Your State and City</h2>
       <form id="search-form">
+        <label for="state">State:</label>
+        <select id="state">
+          <option value="">Select State</option>
+        </select>
         <label for="city">City:</label>
         <input type="text" id="city" placeholder="Enter your city">
         <button type="submit">Find Stations</button>
@@ -420,25 +462,48 @@
   </footer>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+
+    // Fetch States from Local JSON File
+    async function fetchStates() {
+      try {
+        const response = await fetch('states.json');  // Your JSON file with states
+        if (response.ok) {
+          const data = await response.json();
+          const stateSelect = document.getElementById('state');
+
+          data.states.forEach((state) => {
+            const option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+          });
+        } else {
+          console.error('Failed to fetch states');
+        }
+      } catch (error) {
+        console.error('Error fetching states:', error);
+      }
+    }
+
+    fetchStates();
+
     // Initialize the map
+
     const map = L.map('map').setView([20.5937, 78.9629], 5); // Centered on India
 
-    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Custom Marker Icon
     const stationIcon = L.icon({
-      iconUrl: 'icon.png', // Replace with your custom icon URL
+      iconUrl: 'icon.png',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32]
     });
 
-    // Highlight Marker Icon
     const highlightIcon = L.icon({
-      iconUrl: 'icon1.png', // Replace with your highlight icon URL
+      iconUrl: 'icon1.png',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32]
@@ -447,81 +512,92 @@
     let stationsData = [];
     let currentMarker = null;
 
-    // Fetch EV charging stations and add markers
-    async function fetchStations(city) {
-      // Replace with your actual JSON file URL
-      const jsonUrl = 'stationev.json';
+    function showLoading() {
+      const stationList = document.getElementById('station-list');
+      stationList.innerHTML = '<li>Loading stations...</li>';
+    }
+
+    function hideLoading() {
+      const stationList = document.getElementById('station-list');
+      stationList.innerHTML = '';
+    }
+
+    async function fetchStations(state, city) {
+      const jsonUrl = 'stationev.json'; // Replace with your actual JSON file URL
+
+      showLoading();
 
       try {
-        const response = await fetch(jsonUrl); // Fetch the local JSON file
+        const response = await fetch(jsonUrl);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
         const data = await response.json();
-        console.log(data);  // Debugging: log the data received from the JSON file
         stationsData = data;
 
+        hideLoading();
+
         if (data && data.length > 0) {
-          // Filter stations by city
-          const filteredStations = data.filter(station => station.city.toLowerCase() === city.toLowerCase());
+          const filteredStations = data.filter(station =>
+            station.city.toLowerCase() === city.toLowerCase() && station.state.toLowerCase() === state.toLowerCase()
+          );
 
           if (filteredStations.length > 0) {
-            // Clear any existing markers
-            map.eachLayer((layer) => {
+            map.eachLayer(layer => {
               if (layer instanceof L.Marker) {
                 map.removeLayer(layer);
               }
             });
 
-            // Clear the list
             const stationList = document.getElementById('station-list');
             stationList.innerHTML = '';
 
-            // Iterate over the filtered data and add markers for each charging station
-            filteredStations.forEach((station, index) => {
-              const lat = station.lattitude;
+            filteredStations.forEach(station => {
+              const lat = station.latitude;
               const lon = station.longitude;
 
-              // Center the map on the first charging station
               map.setView([lat, lon], 12);
 
               const marker = L.marker([lat, lon], { icon: stationIcon })
                 .addTo(map)
-                .bindPopup(`<b>Charging Station in ${city}</b><br>${station.address}`);
+                .bindPopup(`<b>${station.name}</b><br>${station.address}`);
 
-              // Add list item
               const listItem = document.createElement('li');
-              listItem.textContent = station.address;
+              listItem.textContent = `${station.name}: ${station.address}`;
               listItem.addEventListener('click', () => {
                 if (currentMarker) {
-                  currentMarker.setIcon(stationIcon); // Reset previously highlighted marker
+                  currentMarker.setIcon(stationIcon);
                 }
                 map.setView([lat, lon], 12);
-                marker.setIcon(highlightIcon); // Highlight the selected marker
-                currentMarker = marker; // Set the current marker
+                marker.setIcon(highlightIcon);
+                currentMarker = marker;
               });
               stationList.appendChild(listItem);
             });
           } else {
-            alert('No charging stations found in the city.');
+            alert('No charging stations found in the selected city and state.');
           }
         } else {
-          alert('No charging stations found in the city.');
+          alert('No charging stations found.');
         }
       } catch (error) {
-        console.error('Error fetching data from JSON file:', error);
-        alert('An error occurred while fetching data.');
+        console.error('Error fetching data:', error);
+        hideLoading();
+        alert('An error occurred while fetching data. Please try again later.');
       }
     }
 
-    // Handle form submission
     document.getElementById('search-form').addEventListener('submit', (e) => {
       e.preventDefault();
+      const state = document.getElementById('state').value.trim();
       const city = document.getElementById('city').value.trim();
-      if (city) {
-        fetchStations(city);
+      if (state && city) {
+        fetchStations(state, city);
       } else {
-        alert('Please enter a city name.');
+        alert('Please select a state and enter a city.');
       }
     });
-    // JavaScript for Hamburger Menu
+
     function toggleMenu() {
       const mobileMenu = document.getElementById('mobile-menu');
       const backdrop = document.querySelector('.backdrop');
@@ -531,7 +607,6 @@
       backdrop.classList.toggle('active');
       hamburger.classList.toggle('active');
     }
-
   </script>
 </body>
 
