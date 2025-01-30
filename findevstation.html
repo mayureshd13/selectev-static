@@ -10,12 +10,52 @@
     @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
 
     /* Base styles */
+    :root {
+      --primary-color: #00dfc4;
+      --secondary-color: #223243;
+      --background-light: #f4f4f9;
+      --background-dark: #121212;
+      --text-light: #ffffff;
+      --text-dark: #000000;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
+      background-color: var(--background-light);
+      color: var(--text-dark);
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     }
+
+    .dark-mode {
+      background-color: var(--background-dark);
+      color: var(--text-light);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-dark-mode {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-size: 18px;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .toggle-dark-mode:hover {
+      color: #e67e22;
+    }
+
 
     /* Fade-in animation */
     @keyframes fadeIn {
@@ -57,6 +97,7 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     }
+    
 
     header h1 {
       font-size: 28px;
@@ -245,17 +286,18 @@
       padding: 0.8rem;
       /* Relative padding */
       margin-bottom: 1rem;
+      margin-top: 1rem;
       /* Consistent spacing */
       border-radius: 5px;
       border: none;
       font-size: 1rem;
       box-sizing: border-box;
-      /* Ensures padding doesn’t affect width */
     }
 
     .form-container button {
       background-color: #e67e22;
       color: white;
+      font-weight:bold;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
@@ -279,16 +321,39 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: #f9f9f9;
-      color: #333;
+      color: #0e0d0d;
       box-sizing: border-box;
       transition: border-color 0.3s ease;
       margin-bottom: 1rem;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+    }
+
+    .dark-mode #state {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #393838;
+      color: #f8fafb;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      margin-bottom: 1rem;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+
     }
 
     #state:hover {
       border-color: #007bff;
       background-color: #e9f4fe;
     }
+    .dark-mode #state:hover {
+      border-color: #0f7b82;
+      background-color: #164645;
+    }
+
 
     #state:focus {
       outline: none;
@@ -296,11 +361,129 @@
       background-color: #fff;
     }
 
+    .dark-mode #state:focus {
+      outline: none;
+      border-color: #007bff;
+      background-color: #164645;
+    }
+
     #state option {
       padding: 10px;
       background-color: #fff;
       color: #333;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+    } 
+
+    .dark-mode #state option {
+      padding: 10px;
+      background-color: #164645;
+      color: #fdfbfb;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
     }
+
+    .city-list {
+      max-height: 200px;
+      overflow-y: auto;
+      position: relative;
+      border: 1px solid #ccc;
+      background-color: white;
+      border-radius: 5px;
+    }
+
+    .dark-mode   .city-list {
+      max-height: 200px;
+      overflow-y: auto;
+      position: relative;
+      border: 1px solid #0dadf7;
+      background-color: rgb(6, 70, 74);
+      border-radius: 5px;
+    }
+
+    .city-option,
+    .suggestion-item {
+      padding: 8px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .dark-mode .city-option,
+    .suggestion-item {
+      padding: 8px;
+      cursor: pointer;
+      color: #fcfbfb;
+    }
+
+    .city-option:hover,
+    .suggestion-item:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    #city {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid white;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+    }
+
+    .dark-mode #city {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid white;
+      background-color: #393838;
+      color: #f8fafb;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+
+    }
+
+    #city-list {
+      display: block;
+      margin-top: 10px;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+
+    }
+
+    .dark-mode #city-list {
+      display: block;
+      margin-top: 10px;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 400;
+    }
+    /* Responsive Design */
+@media screen and (max-width: 768px) {
+  label[for="state"] {
+    font-size: 14px;
+  }
+  
+  #state, #city {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  .city-list {
+    max-height: 150px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  label[for="state"] {
+    font-size: 12px;
+  }
+  
+  #state, #city {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  .city-list {
+    max-height: 120px;
+  }
+}
 
     .list-container {
       background-color: #fff;
@@ -310,7 +493,19 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       max-height: 200px;
       overflow-y: auto;
+  
     }
+    .dark-mode .list-container {
+      background-color: #393838;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-height: 200px;
+      overflow-y: auto;
+  
+    }
+
 
     .list-container ul {
       list-style: none;
@@ -327,6 +522,11 @@
     .list-container li:hover {
       background-color: #f4f4f9;
     }
+
+    .dark-mode .list-container li:hover {
+      background-color: #127f89;
+    }
+
 
     footer .bottom-details {
       width: 100%;
@@ -366,6 +566,11 @@
       header {
         flex-direction: flex;
       }
+      header h1 {
+      font-size: 24px;
+      color: #00dfc4;
+      font-family: "Roboto Condensed", serif;
+    }
 
       nav ul {
         flex-direction: column;
@@ -403,8 +608,9 @@
         padding: 8px;
       }
     }
-    .popup {
-  display: none; /* Hidden by default */
+
+.popup {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -425,8 +631,10 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.popup-content p {
-  margin-bottom: 15px;
+/* Dark Mode */
+.dark-mode .popup-content {
+  background: #333;
+  color: #fff;
 }
 
 #closePopup {
@@ -438,10 +646,13 @@
   cursor: pointer;
 }
 
-#closePopup:hover {
-  background: #0056b3;
+/* Dark Mode */
+.dark-mode #closePopup {
+  background: #07dcf8;
+  color: rgb(14, 9, 1);
+  font-weight: bold;
 }
-
+    
   </style>
 </head>
 
@@ -466,6 +677,7 @@
         <li><a href="aboutus.html">About Us</a></li>
         <li><a href="findevstation.html">Find EV Station</a></li>
       </ul>
+      <button class="toggle-dark-mode">🌙</button>
     </nav>
   </header>
   <div class="backdrop" onclick="toggleMenu()"></div>
@@ -478,22 +690,28 @@
         <select id="state">
           <option value="">Select State</option>
         </select>
+
         <label for="city">City:</label>
-        <input type="text" id="city" placeholder="Enter your city">
+        <input type="text" id="city" placeholder="Search or select city" autocomplete="off">
+        <div id="city-list" class="city-list"></div>
+
         <button type="submit">Find Stations</button>
       </form>
     </div>
+
     <div class="list-container">
       <ul id="station-list"></ul>
     </div>
+
     <div id="map"></div>
   </main>
+
   <div id="customPopup" class="popup">
     <div class="popup-content">
       <p id="popupMessage"></p>
       <button id="closePopup">OK</button>
     </div>
-  </div>  
+  </div>
   <footer>
     <div class="bottom-details">
       <div class="bottom_text">
@@ -507,20 +725,27 @@
   </footer>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    let stateData = []; // Store states and cities data
 
-    // Fetch States from Local JSON File
+    // Fetch States and Cities from Local JSON File
     async function fetchStates() {
       try {
-        const response = await fetch('states.json');  // Your JSON file with states
+        const response = await fetch('states.json'); // Your JSON file with states
         if (response.ok) {
           const data = await response.json();
+          stateData = data.states; // Store the states data
           const stateSelect = document.getElementById('state');
-
-          data.states.forEach((state) => {
-            const option = document.createElement('option');
-            option.value = state;
-            option.textContent = state;
-            stateSelect.appendChild(option);
+          data.states.sort((a, b) => a.name.localeCompare(b.name));
+       // Populate sorted states in the dropdown
+      data.states.forEach((state) => {
+        const option = document.createElement('option');
+        option.value = state.name; // Assuming 'name' is the state name
+        option.textContent = state.name;
+        stateSelect.appendChild(option);
+      });
+          // Listen for state changes to populate the cities dropdown
+          stateSelect.addEventListener('change', function () {
+            populateCities(stateSelect.value);
           });
         } else {
           console.error('Failed to fetch states');
@@ -530,10 +755,62 @@
       }
     }
 
-    fetchStates();
+// Populate cities based on selected state
+function populateCities(stateName) {
+  const cityInput = document.getElementById('city');
+  const cityList = document.getElementById('city-list');
+  cityList.innerHTML = ''; // Clear existing suggestions
 
+  const stateDataObj = stateData.find(state => state.name === stateName);
+  if (stateDataObj && stateDataObj.cities) {
+    let cities = stateDataObj.cities;
+
+    // Sort cities alphabetically
+    cities = cities.sort((a, b) => a.localeCompare(b));
+
+    // Listen for city input to filter the city list
+    cityInput.addEventListener('input', function () {
+      const searchQuery = cityInput.value.toLowerCase();
+      const filteredCities = cities.filter(city => city.toLowerCase().includes(searchQuery));
+
+      cityList.innerHTML = ''; // Clear previous suggestions
+      filteredCities.forEach(city => {
+        const suggestionItem = document.createElement('div');
+        suggestionItem.textContent = city;
+        suggestionItem.classList.add('suggestion-item');
+        suggestionItem.addEventListener('click', function () {
+          cityInput.value = city;
+          cityList.innerHTML = ''; // Clear suggestions after selection
+        });
+        cityList.appendChild(suggestionItem);
+      });
+
+      // If no results found, show a "no results" message
+      if (cityInput.value && filteredCities.length === 0) {
+        const noResults = document.createElement('div');
+        noResults.textContent = 'No matching cities found';
+        cityList.appendChild(noResults);
+      }
+    });
+
+    // Display the initial list of cities as options above the search box
+    const cityDropdown = document.createElement('div');
+    cityDropdown.classList.add('city-dropdown');
+    cities.forEach(city => {
+      const cityOption = document.createElement('div');
+      cityOption.textContent = city;
+      cityOption.classList.add('city-option');
+      cityOption.addEventListener('click', function () {
+        cityInput.value = city;
+        cityList.innerHTML = ''; // Clear suggestions after selection
+      });
+      cityDropdown.appendChild(cityOption);
+    });
+
+    cityList.appendChild(cityDropdown);
+  }
+}
     // Initialize the map
-
     const map = L.map('map').setView([20.5937, 78.9629], 5); // Centered on India
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -557,115 +834,115 @@
     let stationsData = [];
     let currentMarker = null;
 
-    function showLoading() {
-  const stationList = document.getElementById('station-list');
-  stationList.innerHTML = '<li>Loading stations...</li>';
-}
+    async function fetchStations(state, city) {
+      const jsonUrl = 'stationev.json'; // Path to your JSON data
 
-function hideLoading() {
-  const stationList = document.getElementById('station-list');
-  stationList.innerHTML = '';
-}
+      showLoading();
 
-// Function to show custom pop-up
-function showPopup(message) {
-  document.getElementById('popupMessage').textContent = message;
-  document.getElementById('customPopup').style.display = 'flex';
-}
+      try {
+        const response = await fetch(jsonUrl);
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const data = await response.json();
+        stationsData = data;
 
-// Close pop-up on button click
-document.getElementById('closePopup').addEventListener('click', function() {
-  document.getElementById('customPopup').style.display = 'none';
-});
+        hideLoading();
 
-async function fetchStations(state, city) {
-  const jsonUrl = 'stationev.json'; // Path to your JSON data
+        if (data && data.length > 0) {
+          console.log('Searching for:', state, city);
 
-  showLoading();
+          const filteredStations = data.filter(station =>
+            station.city.toLowerCase() === city.toLowerCase() && station.state.toLowerCase() === state.toLowerCase()
+          );
 
-  try {
-    const response = await fetch(jsonUrl);
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
-    const data = await response.json();
-    stationsData = data;
-
-    hideLoading();
-
-    if (data && data.length > 0) {
-      // Log state and city for debugging
-      console.log('Searching for:', state, city);
-
-      const filteredStations = data.filter(station =>
-        station.city.toLowerCase() === city.toLowerCase() && station.state.toLowerCase() === state.toLowerCase()
-      );
-
-      if (filteredStations.length > 0) {
-        map.eachLayer(layer => {
-          if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
-          }
-        });
-
-        const stationList = document.getElementById('station-list');
-        stationList.innerHTML = '';
-
-        filteredStations.forEach(station => {
-          const lat = station.latitude;
-          const lon = station.longitude;
-
-          // Log coordinates to ensure they're valid
-          console.log('Coordinates for station:', lat, lon);
-
-          // Check for valid coordinates before adding the marker
-          if (lat && lon && !isNaN(lat) && !isNaN(lon)) {
-            map.setView([lat, lon], 12);
-
-            const marker = L.marker([lat, lon], { icon: stationIcon })
-              .addTo(map)
-              .bindPopup(`<b>${station.name}</b><br>${station.address}`);
-
-            const listItem = document.createElement('li');
-            listItem.textContent = `${station.name}: ${station.address}`;
-            listItem.addEventListener('click', () => {
-              if (currentMarker) {
-                currentMarker.setIcon(stationIcon);
+          if (filteredStations.length > 0) {
+            map.eachLayer(layer => {
+              if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
               }
-              map.setView([lat, lon], 12);
-              marker.setIcon(highlightIcon);
-              currentMarker = marker;
             });
-            stationList.appendChild(listItem);
+
+            const stationList = document.getElementById('station-list');
+            stationList.innerHTML = '';
+
+            filteredStations.forEach(station => {
+              const lat = station.latitude;
+              const lon = station.longitude;
+
+              if (lat && lon && !isNaN(lat) && !isNaN(lon)) {
+                map.setView([lat, lon], 12);
+
+                const marker = L.marker([lat, lon], { icon: stationIcon })
+                  .addTo(map)
+                  .bindPopup(`<b>${station.name}</b><br>${station.address}`);
+
+                const listItem = document.createElement('li');
+                listItem.textContent = `${station.name}: ${station.address}`;
+                listItem.addEventListener('click', () => {
+                  if (currentMarker) {
+                    currentMarker.setIcon(stationIcon);
+                  }
+                  map.setView([lat, lon], 12);
+                  marker.setIcon(highlightIcon);
+                  currentMarker = marker;
+                });
+                stationList.appendChild(listItem);
+              } else {
+                console.error(`Invalid coordinates for station: ${station.name}`);
+              }
+            });
           } else {
-            console.error(`Invalid coordinates for station: ${station.name}`);
+            showPopup('No charging stations found in the selected city and state.');
           }
-        });
-      } else {
-        showPopup('No charging stations found in the selected city and state.');
+        } else {
+          showPopup('No charging stations found.');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        hideLoading();
+        showPopup('An error occurred while fetching data. Please try again later.');
       }
-    } else {
-      showPopup('No charging stations found.');
     }
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    hideLoading();
-    showPopup('An error occurred while fetching data. Please try again later.');
-  }
-}
 
-document.getElementById('search-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const state = document.getElementById('state').value.trim();
-  const city = document.getElementById('city').value.trim();
-  if (state && city) {
-    fetchStations(state, city);
-  } else {
-    showPopup('Please select a state and enter a city.');
-  }
-});
+    document.getElementById('search-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const state = document.getElementById('state').value.trim();
+      const city = document.getElementById('city').value.trim();
+      if (state && city) {
+        fetchStations(state, city);
+      } else {
+        showPopup('Please select a state and enter a city.');
+      }
+    });
 
-    function toggleMenu() {
+    function showLoading() {
+      const stationList = document.getElementById('station-list');
+      stationList.innerHTML = '<li>Loading stations...</li>';
+    }
+
+    function hideLoading() {
+      const stationList = document.getElementById('station-list');
+      stationList.innerHTML = '';
+    }
+
+    function showPopup(message) {
+      document.getElementById('popupMessage').textContent = message;
+      document.getElementById('customPopup').style.display = 'flex';
+    }
+
+    document.getElementById('closePopup').addEventListener('click', function () {
+      document.getElementById('customPopup').style.display = 'none';
+    });
+
+    fetchStates(); // Initialize the state dropdown on page load
+
+    document.querySelector('.toggle-dark-mode').addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+        // JavaScript for Hamburger Menu
+        function toggleMenu() {
       const mobileMenu = document.getElementById('mobile-menu');
       const backdrop = document.querySelector('.backdrop');
       const hamburger = document.querySelector('.hamburger');
@@ -674,6 +951,7 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
       backdrop.classList.toggle('active');
       hamburger.classList.toggle('active');
     }
+
   </script>
 </body>
 
