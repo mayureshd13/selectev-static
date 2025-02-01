@@ -241,6 +241,7 @@
         display: flex;
       }
     }
+    
 
     main {
       padding: 20px;
@@ -405,11 +406,15 @@
     .suggestion-item {
       padding: 8px;
       cursor: pointer;
-      color: #333;
+      color: #0c0c0c;
     }
 
-    .dark-mode .city-option,
-    .suggestion-item {
+    .dark-mode .city-option{
+      padding: 8px;
+      cursor: pointer;
+      color: #fcfbfb;
+    }
+   .dark-mode .suggestion-item {
       padding: 8px;
       cursor: pointer;
       color: #fcfbfb;
@@ -459,15 +464,27 @@
   label[for="state"] {
     font-size: 14px;
   }
-  
+  .dark-mode label[for="state"] {
+    font-size: 14px;
+  }
+
   #state, #city {
     font-size: 14px;
     padding: 8px;
   }
+  .dark-mode #state, #city {
+    font-size: 14px;
+    padding: 8px;
+  }
+
   
   .city-list {
     max-height: 150px;
   }
+  .dark-mode .city-list {
+    max-height: 150px;
+  }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -475,14 +492,29 @@
     font-size: 12px;
   }
   
+  .dark-mode   label[for="state"] {
+    font-size: 12px;
+  }
+
   #state, #city {
     font-size: 12px;
     padding: 6px;
   }
-  
+  .dark-mode #state {
+    font-size: 12px;
+    padding: 6px;
+  }
+  .dark-mode #city {
+    font-size: 12px;
+    padding: 6px;
+  }
   .city-list {
     max-height: 120px;
   }
+  .dark-mode .city-list {
+    max-height: 120px;
+  }
+
 }
 
     .list-container {
@@ -560,7 +592,7 @@
     .bottom-details .bottom_text a {
       margin-right: 10px;
     }
-
+    
     /* Responsive styles */
     @media (max-width: 768px) {
       header {
@@ -602,11 +634,28 @@
         padding: 10px;
       }
 
+      .dark-mode .form-container {
+        padding: 10px;
+      }
+      .dark-mode .list-container {
+        padding: 10px;
+      }
+
+
       .form-container input,
       .form-container button {
         font-size: 0.9rem;
         padding: 8px;
       }
+      .dark-mode .form-container input {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+      .dark-mode .form-container button {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+
     }
 
 .popup {
